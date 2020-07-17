@@ -2,10 +2,18 @@ const express = require('express')
 const bcrypt = require('bcrypt');
 const _ = require('underscore')
 const Usuario = require('../models/user')
+const { verificaToken, verificaAdminRole } = require('../middlewares/autenticacion')
 const app = express()
 
-app.get('/user', function (req, res) {
+app.get('/user', verificaToken , (req, res) =>{
     
+    // return res.json({
+    //     usuario: req.usuario,
+    //     nombre: req.usuario.nombre,
+    //     email:req.usuario.email
+    // });
+
+
     let desde = req.query.desde || 0;
     desde = Number(desde);
 
@@ -34,7 +42,7 @@ app.get('/user', function (req, res) {
             })    
   });
   
-  app.post('/user', function (req, res) {
+  app.post('/user',[verificaToken,verificaAdminRole] , function (req, res) {
       let body = req.body;
 
       let usuario = new Usuario({
@@ -63,7 +71,7 @@ app.get('/user', function (req, res) {
   });
   
   //Put nos ayudara a actualizar los registros
-  app.put('/user/:id', function (req, res) {
+  app.put('/user/:id', [verificaToken,verificaAdminRole] ,function (req, res) {
   
       let id = req.params.id;
       let body = _.pick(req.body,[
@@ -92,7 +100,7 @@ app.get('/user', function (req, res) {
 
 
 
-  app.delete('/user/:id', function (req, res) {
+  app.delete('/user/:id',[verificaToken, verificaAdminRole] , function (req, res) {
         
         let id = req.params.id;
         let cambiarestado = {
