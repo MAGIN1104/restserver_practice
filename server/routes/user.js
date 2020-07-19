@@ -7,13 +7,6 @@ const app = express()
 
 app.get('/user', verificaToken , (req, res) =>{
     
-    // return res.json({
-    //     usuario: req.usuario,
-    //     nombre: req.usuario.nombre,
-    //     email:req.usuario.email
-    // });
-
-
     let desde = req.query.desde || 0;
     desde = Number(desde);
 
