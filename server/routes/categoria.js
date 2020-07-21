@@ -16,7 +16,7 @@ app.get('/categoria', verificaToken ,(req,res)=>{
                 return res.status(500).json({
                     ok:false,
                     err
-                })
+                });
             }
 
             res.json({
@@ -49,9 +49,8 @@ app.get('/categoria/:id',verificaToken,(req,res)=>{
     res.json({
         ok:true,
         categoria: categoriaDB
-    })
-
-   })
+       }); 
+   });
 });
 
 //Crear nueva categoria
